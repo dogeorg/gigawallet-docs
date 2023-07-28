@@ -15,6 +15,7 @@
 - [Doge Connect - Payment Protocol](./connect.md)
 - [Paying Out](./invoices.md)
 - [Webhooks](./webhooks.md)
+- [MQTT](./mqtt.md)
 
 # Contributing
 - [Extending](./extending.md)

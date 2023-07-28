@@ -14,8 +14,6 @@ business.
 
 ## It's dangerous to go alone, take this? Maybe! 
 
-
-
 > ⚠️ Note: GigaWallet is a software-engineering component for anyone looking to 
 > integrate Dogecoin into their product, this is not a user-facing Dogecoin wallet.
 > If you are a user looking for a dogecoin wallet you can search the [wallet index](https://dogecoin.com/wallets/) 
