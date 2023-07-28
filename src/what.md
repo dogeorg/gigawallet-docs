@@ -10,7 +10,8 @@ The purpose of the GigaWallet is to promote the rapid uptake of Dogecoin as a pa
 option, by taking the complexity and risk out of integrating Dogecoin payments into 
 business.
 
-![Static Badge](https://img.shields.io/badge/0.1.0_alpha1-test?style=flat&logo=github&logoColor=white&label=GigaWallet&labelColor=black&color=white)
+[![Static Badge](https://img.shields.io/badge/0.1.0_alpha1-test?style=flat&logo=github&logoColor=white&label=GigaWallet&labelColor=black&color=white)](https://github.com/dogecoinfoundation/gigawallet)
+
 
 ## It's dangerous to go alone, take this? Maybe! 
 
