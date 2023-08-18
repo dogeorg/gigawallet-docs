@@ -6,8 +6,6 @@
 
 # Getting Started
 - [Installation](./installation.md)
-- [Selecting a Database](./db.md)
-- [Logging](./logging.md)
 
 # Integration
 - [Working with Accounts](./accounts.md)
