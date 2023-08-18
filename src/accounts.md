@@ -54,8 +54,8 @@ You can:
 ### Scenario 4 - Global Scale platform ie: X.com, Twitch TV, EBay, etc.
 
 You are a large scale unicorn with hundreds of millions of users. Your infrastructure teams
-can deploy Gigawallet in multiple setups on your kubernetes clusters with appropriate auto-scaling 
-and user sharding (in development). Gigawallet integrates directly into your existing services 
+can deploy Gigawallet in multiple configurations on your kubernetes clusters with appropriate auto-scaling 
+and user sharding (in development). Gigawallet integrates directly into your existing stack 
 with simple REST calls.
 
 You can:
