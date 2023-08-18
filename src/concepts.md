@@ -22,7 +22,7 @@ further API calls.
 
 Accounts have many [Invoices](#invoices) which represent requests for payment, 
 as well as a Balance which tracks current available Dogecoin and current 
-pending incomming and outgoing transactions.
+pending incoming and outgoing transactions.
 
 How you map Accounts to your system depends on your objective, you may 
 have an account per user in the case of a Social Media platform, or if 
