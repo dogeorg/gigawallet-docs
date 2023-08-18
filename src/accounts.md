@@ -12,6 +12,8 @@ Accounts are created with a `Foreign ID` which is provided by you and links the 
 to your system. Most Admin APIs use this Foreign ID to reference internal accounts so
 that you can easily integrate Gigawallet with your own systems.
 
+## Different ways to use Accounts with your system
+
 ### Scenario 1 - Wholesale Store
 
 You are a wholesale business selling dog-collars, dog-leads and accessories to pet stores.
