@@ -49,7 +49,7 @@ You can:
 - Recieve payment in Dogecoin from your users into their Dogecoin wallet for trading. 
 - Pay Dogecoin to your users wallet once trading is complete.
 - Provide balance and reports on payments to and from their wallets.
-- Configure auto-payouts to your users cold-wallet so they don't leave their Dogecoin exchanges.
+- Configure auto-payouts to your users cold-wallet so they don't leave their Dogecoin on exchanges.
 
 ### Scenario 4 - Global Scale platform ie: X.com, Twitch TV, EBay, etc.
 
