@@ -66,7 +66,6 @@ You can:
 
 ## Account Administration APIs
 
-TODO
 
 ### POST /account/:foreignID  
 _Create or update an Account_
