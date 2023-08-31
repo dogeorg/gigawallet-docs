@@ -175,5 +175,174 @@ Expected POST Body:
 }
 ```
 
+
+### GET /account/:foreignID/invoice/:invoiceID  
+_Get an Invoice for a specific account_
+
+`:foreignID` is the unique identifier from your system which you used to create an `account`.
+`:invoiceID` is the unique identifier for an invoice, ie: `DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH`.
+
+
+***RESPONSE BODY:***
+```json
+{
+  "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "items": [
+    {
+      "type": "item",
+      "name": "Dogecoin Sticker",
+      "sku": "",
+      "description": "",
+      "value": "100",
+      "quantity": 1,
+      "image_link": ""
+    }
+  ],
+  "created": "2023-08-30T16:49:51.705419+10:00",
+  "total": "100",
+  "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "part_payment_detected": false,
+  "total_payment_detected": false,
+  "total_payment_confirmed": false,
+  "payment_unconfirmed": false,
+  "estimate_seconds_to_confirm": 0
+}
+```
+
+### GET /account/:foreignID/invoices?limit=100&cursor=0
+_Enumerate an Invoice for a specific account._
+
+`:foreignID` is the unique identifier from your system which you used to create an `account`.
+`limit` is the maximum number of records to return.
+`cursor` starts at 0, and should be set to the `cursor` value returned by a previous call.
+
+Those familiar with popular cursor-based APIs such as AWS etc should understand this 
+pattern, it allows for machine-to-machine fetching of all invoices and should not be 
+confused with an offset/limit style API. 
+
+The response contains two elements, `items` which is an array of invoices, and `cursor`
+which should be passed to the next invocation. A cursor of `0` indicates there are 
+no further records. 
+
+
+***RESPONSE BODY:***
+```json
+{
+"items": [
+      {
+        "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+        "items": [
+          {
+            "type": "item",
+            "name": "Dogecoin Sticker",
+            "sku": "",
+            "description": "",
+            "value": "100",
+            "quantity": 1,
+            "image_link": ""
+          }
+        ],
+        "created": "2023-08-30T16:49:51.705419+10:00",
+        "total": "100",
+        "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+        "part_payment_detected": false,
+        "total_payment_detected": false,
+        "total_payment_confirmed": false,
+        "payment_unconfirmed": false,
+        "estimate_seconds_to_confirm": 0
+      }
+  ],
+  "cursor": 0
+}
+```
+
+
 ## Public API
-### Fetching 
+
+The public invoice APIs are available on a different port which is designed to be exposed to the internet via your 
+proxy or as part of your own API gateway. These APIs can be called by web or mobile clients, with the aim of providing
+payment info to the payer. We imagine you will use these apis to show the payer a list of items they are purchasing, and
+to provide details / address / QRcodes etc to facilitate payment.
+
+
+### GET /invoice/:invoiceID  
+
+_Get an Invoice_
+
+`:invoiceID` is the unique identifier for an invoice, ie: `DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH`.
+
+
+***RESPONSE BODY:***
+```json
+{
+  "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "items": [
+    {
+      "type": "item",
+      "name": "Dogecoin Sticker",
+      "sku": "",
+      "description": "",
+      "value": "100",
+      "quantity": 1,
+      "image_link": ""
+    }
+  ],
+  "created": "2023-08-30T16:49:51.705419+10:00",
+  "total": "100",
+  "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "part_payment_detected": false,
+  "total_payment_detected": false,
+  "total_payment_confirmed": false,
+  "payment_unconfirmed": false,
+  "estimate_seconds_to_confirm": 0
+}
+```
+
+### GET /invoice/:invoiceID/qr.png
+
+This endpoint does not return JSON, it returns a PNG image of a QR code containing a dogecoin
+address in the format:
+
+`dogecoin:<address>?amount=<amount>&ctx=<dogeconnect url>`
+
+The `address` is the `pay_to_address` in the invoice.
+The `amount` is the `total` dogecoin in the invoice.
+The `ctx` is a URL that points to a `dogecoin connect` payload.
+
+<p><img src="images/qr.png" alt="qr code" width="40%" style="margin-left: 30%;"/></p>
+
+This can be directly placed on your payment page and if scanned will load the user's
+Dogecoin wallet to make a payment for the full amount of the invoice. This could be
+used in a web interface, or even emailed or mailed with an invoice allowing immediate 
+payment by the recipient.
+
+
+### GET /invoice/:invoiceID/connect
+
+This endpoint returns a `dogecoin connect` payload which is defined as a new protocol 
+to facilitate payment from a self-custodial wallet without needing access to a relay.
+
+The concept is that a Dogecoin wallet which understands the `dogecoin connect` protocol
+can present in it's own UI, an invoice complete with items being purchased and have
+the user generate a `transaction` which can be issued back to GigaWallet directly where
+it will be validated and sent to the mempool. 
+
+This will allow GigaWallet to support `zero-confirmation` payments, aka `instant payments`
+which are required for fast-turn-around services such as vending machines, coffee shops, 
+etc. 
+
+```json
+{
+  "version": "0.1",
+  "service_name": "Example Dogecoin Store",
+  "service_icon_url": "https://example.com/icon.png",
+  "service_domain": "example.com",
+  "service_key_hash": "...",
+  "payload": "eyJ0eXBlIjoiaW52b2ljZSIsInJlcXVlc3...",
+  "hash": "..."
+}
+```
+
+The JSON body contains a `payload` which is signed by the issuing store key which 
+can be stored on the client once recognised for the first time. This protocol is
+still under development and support is incomplete, watch this space!
