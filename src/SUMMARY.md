@@ -11,7 +11,7 @@
 - [Working with Accounts](./accounts.md)
 - [Working with Invoices](./invoices.md)
 - [Doge Connect - Payment Protocol](./connect.md)
-- [Paying Out](./invoices.md)
+- [Paying Out](./payout.md)
 - [Webhooks](./webhooks.md)
 - [MQTT](./mqtt.md)
 
