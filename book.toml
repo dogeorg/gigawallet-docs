@@ -1,6 +1,6 @@
 [book]
 title = "GigaWallet - A backend for your Dogecoin Business"
-description = "DDogecoin GigaWallet is a backend service which provides a convenient integration API for platforms such as online shops, exchanges, social media platforms etc, to accept and transact Dogecoin on behalf of their users."
+description = "Dogecoin GigaWallet is a backend service which provides a convenient integration API for platforms such as online shops, exchanges, social media platforms etc, to accept and transact Dogecoin on behalf of their users."
 authors = ["tjstebbing"]
 language = "en"
 src = "src"
