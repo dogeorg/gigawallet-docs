@@ -7,7 +7,7 @@ src = "src"
 
 [output.html]
 mathjax-support = true
-git-repository-url = "https://github.com/dogeorg/gigawallet-docs/tree/main/"
+git-repository-url = "https://github.com/dogecoinfoundation/gigawallet/tree/main/"
 edit-url-template = "https://github.com/dogeorg/gigawallet-docs/edit/main/{path}"
 
 [output.html.playground]
