@@ -12,26 +12,44 @@ To build from source you will need the Golang compiler installed.
 Head on over to [go.dev and grab a 
 copy for your local environment](https://go.dev/doc/install).
 
-### Dogecoin Core Node 
+### Dogecoin Core Node
 
 GigaWallet currently depends on a co-located instance of the Dogecoin
 Core Node project, we recommend building this without the wallet / QT 
-interface, and with the RPC APIs. 
+features, and with the RPC APIs. 
+
+> ⚠️ **Important:** Gigawallet trusts the Core Node to provide accurate blockchain data; for this reason is **critically important** to use a Core Node that you fully trust. It's safest to host the Core Node yourself.
 
 If you would like to build this yourself or download binaries you 
 can grab these at 
 [Github.com/dogecoin/dogecoin](https://github.com/dogecoin/dogecoin),
-
 
 alternatively if you're happy with containers or packages try the
 [NixOS](#running-with-nixos) or [Docker](#running-with-docker) deployment 
 methods.
 
 > ⚠️ Note: Running a full core node requires a significant amount
-> of disk to contain the entire Dogecoin blockchain (85Gb as at 2023), 
+> of disk to contain the entire Dogecoin blockchain (140Gb as at March 2024), 
 > as well as a moderate amound of bandwidth. 
 
 ## Building from source
+
+Install some dependencies required to build Gigawallet:
+
+* **GCC** compiler toolchain (for [cgo](https://go.dev/blog/cgo) i.e. Go-to-C linking; only GCC is supported!)
+* [zeroMQ](http://wiki.zeromq.org/intro:get-the-software) version 4 – [docs](https://zeromq.org/download/)
+* [SQLite 3](https://www.sqlite.org/download.html)
+
+```shell
+sudo apt-get update
+sudo apt-get install libzmq3-dev sqlite3 libsqlite3-dev build-essential pkg-config
+```
+
+**On Windows**: you can use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) to install these tools, and build Gigawallet from inside the WSL environment (you can access windows drives via `/mnt/c` etc.) Alternatively there is [tdm-gcc](https://jmeubank.github.io/tdm-gcc/), and you can download the other libraries.
+
+**On Mac**: you can use [Homebrew](https://brew.sh/): `brew install zmq pkg-config` – note that `sqlite3` is pre-installed on modern macs. You can brew install `git` if necessary.
+
+### Building Gigawallet
 
 Check out the project from Github and run `make`
 
@@ -54,7 +72,7 @@ This will create a `gigawallet` binary in `/build/`.
 
 > ⚠️ Note: Developer Shortcut 
 > If you are developing in the repository you can simply run `make dev` which will stand-up
-> the server using the devconf.toml file.
+> the server using the devconf.toml file. VS Code debugger also works.
 
 
 ## Configuration 
@@ -62,7 +80,7 @@ This will create a `gigawallet` binary in `/build/`.
 
 ### Config file location
 
-By default the `gigawallet` command will look for a config.toml file in one of:
+By default the `gigawallet` command will look for a `config.toml` file in one of:
 
 ```
 . 
@@ -93,10 +111,10 @@ which you can use as a starting point.
 
 Gigawallet exposes two REST APIs: 
 
-- Admin API which provides sensitive, internal functionality which is called
-from your own backend services, and must be protected behind a firewall. 
+- **Admin API** which provides sensitive, internal functionality which is called
+from your own backend services, and must be **protected behind a firewall**. 
 
-- Public API which provides web-facing routes for your front-end calls, for 
+- **Public API** which provides web-facing routes for your front-end calls, for 
 fetching Invoice data, QR codes for payments, and the Doge Connect protocol 
 endpoints. We recommend this sit behind your load-balancer/proxy and be routed 
 to as required for your needs.
@@ -206,7 +224,7 @@ Loggers are specified as a list of types and a path:
   
 ```
 
-### Configuring Callbacks
+### Configuring HTTP Callbacks
 
 Callbacks or 'webhooks' are URLs which you can configure to recieve HTTP POST requests
 containing JSON-encoded event bodies. This can be used by your system to respond to events
