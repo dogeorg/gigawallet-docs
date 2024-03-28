@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Working with Invoices - GigaWallet - A backend for your Dogecoin Business</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Dogecoin GigaWallet is a backend service which provides a convenient integration API for platforms such as online shops, exchanges, social media platforms etc, to accept and transact Dogecoin on behalf of their users.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">What is GigaWallet?</li><li class="chapter-item expanded "><a href="what.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="concepts.html"><strong aria-hidden="true">2.</strong> Basic Concepts</a></li><li class="chapter-item expanded affix "><li class="part-title">Getting Started</li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">3.</strong> Installation</a></li><li class="chapter-item expanded affix "><li class="part-title">Integration</li><li class="chapter-item expanded "><a href="accounts.html"><strong aria-hidden="true">4.</strong> Working with Accounts</a></li><li class="chapter-item expanded "><a href="invoices.html" class="active"><strong aria-hidden="true">5.</strong> Working with Invoices</a></li><li class="chapter-item expanded "><a href="connect.html"><strong aria-hidden="true">6.</strong> Doge Connect - Payment Protocol</a></li><li class="chapter-item expanded "><a href="payout.html"><strong aria-hidden="true">7.</strong> Paying Out</a></li><li class="chapter-item expanded "><a href="webhooks.html"><strong aria-hidden="true">8.</strong> Webhooks</a></li><li class="chapter-item expanded "><a href="mqtt.html"><strong aria-hidden="true">9.</strong> MQTT</a></li><li class="chapter-item expanded affix "><li class="part-title">Contributing</li><li class="chapter-item expanded "><a href="extending.html"><strong aria-hidden="true">10.</strong> Extending</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">GigaWallet - A backend for your Dogecoin Business</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/dogecoinfoundation/gigawallet/tree/main/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/dogeorg/gigawallet-docs/edit/main/src/invoices.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="working-with-invoices"><a class="header" href="#working-with-invoices">Working with Invoices</a></h1>
+<p>Once you have <a href="/accounts/">Accounts</a> established it's time to start issuing Invoices. Invoices are
+simply a list of items, services, taxes, fees, discounts etc. which a seller is offering for payment
+in Dogecoin.</p>
+<blockquote>
+<p>📚 Wikipedia:
+An invoice, bill or tab is a commercial document issued by a seller to a buyer relating to a sale
+transaction and indicating the products, quantities, and agreed-upon prices for products or services
+the seller had provided the buyer.</p>
+</blockquote>
+<p>As mentioned previously Gigawallet is not your general-purpose user database, just so it is not
+your general purpose shopping-cart either. For this reason <code>Invoices</code> are specifically
+designed to encourage you to have finalised all purchase decisions before issuing an Invoice as the
+final step when your user wants to pay in Dogecoin. Once created an invoice cannot be directly updated
+(this is a design decision!) Gigawallet is a payment system for Dogecoin.</p>
+<h3 id="parts-of-an-invoice"><a class="header" href="#parts-of-an-invoice">Parts of an Invoice</a></h3>
+<p>An invoice is created via the <code>POST /account/:foreignID/invoice</code> endpoint and consists of a list of
+items along with metadata about the status of the payment. Here is an example invoice:</p>
+<pre><code class="language-json">{
+  "id": "DNBVSoHLhX4gQiGLdZJhXMe7XZWuD7orVo",
+  "items": [
+    {
+      "type": "item",
+      "name": "A segment of Toblerone",
+      "sku": "TOB001",
+      "description": "You can share my Toblerone, for 1 Dogecoin!",
+      "value": "1",
+      "quantity": 1,
+      "image_link": ""
+    }
+  ],
+  "created": "2023-08-17T15:40:13.935244+10:00",
+  "total": "1",
+  "pay_to_address": "DNBVSoHLhX4gQiGLdZJhXMe7XZWuD7orVo",
+  "part_payment_detected": false,
+  "total_payment_detected": false,
+  "total_payment_confirmed": false,
+  "payment_unconfirmed": false,
+  "estimate_seconds_to_confirm": 0
+}
+</code></pre>
+<h3 id="id"><a class="header" href="#id">id</a></h3>
+<p>This is a unique ID, it also happens to be the public child address generated from the account
+HD wallet for this invoice. You'll notice it's identical to <code>pay_to_address</code> for that reason, you
+can use this to reference the invoice in future API calls or as a unique identifier for the
+invoice in your own system.</p>
+<h3 id="items"><a class="header" href="#items">items</a></h3>
+<p>Items is an array of line items that get passed in when the invoice is created, Items have a
+<code>value</code> which is a decimal amount of Dogecoin, as a string, per item. This is multiplied by
+<code>quantity</code> and summed across all items to derrive the invoice <code>total</code>.</p>
+<p>Items also have a <code>type</code> which must be one of:</p>
+<ul>
+<li>item</li>
+<li>tax</li>
+<li>fee</li>
+<li>shipping</li>
+<li>discount</li>
+</ul>
+<p>These types are primarily used to distinguish line-items in UI, so that taxes, shipping and fees
+can be grouped separately. We do validate that all item <code>values</code> are a positve amount, except for
+items of type <code>discount</code> which must be a negative amount.</p>
+<h3 id="total"><a class="header" href="#total">total</a></h3>
+<p>This is the total calculated amount owing for the invoice to be considered paid, and is calculated
+as the sum of all item values * quantity. This is a decimal value as a string.</p>
+<h3 id="pay_to_address"><a class="header" href="#pay_to_address">pay_to_address</a></h3>
+<p>This is the dogecoin address for recieving invoice payment.</p>
+<h3 id="part_payment_detected"><a class="header" href="#part_payment_detected">part_payment_detected</a></h3>
+<p>This is a boolean flag that will be set when GigaWallet first detects any kind of payment in
+a block. This may or may not be the total amount owing.</p>
+<h3 id="total_payment_detected"><a class="header" href="#total_payment_detected">total_payment_detected</a></h3>
+<p>This is a boolean flag that will be set when GigaWallet first detects a payment in a block that
+would complete the total amount owing.</p>
+<h3 id="total_payment_confirmed"><a class="header" href="#total_payment_confirmed">total_payment_confirmed</a></h3>
+<p>This is a boolean flag that will be set when GigaWallet detects that <code>required_confirmations</code> have
+been met on the network, this is the best means of determining payment has been made.</p>
+<h3 id="payment_unconfirmed"><a class="header" href="#payment_unconfirmed">payment_unconfirmed</a></h3>
+<p>This boolean will only be set in the event that <code>required_confirmations</code> has been met and confirmed,
+however the blockchain has forked and eliminated your payment. This should only occur in the event that
+you are using a very low <code>required_confirmations</code> count.</p>
+<blockquote>
+<p>⚠️ Note: What should you do in this event? Did I just lose my Dogecoin?</p>
+<p>GigaWallet cannot hide you from the reality of the blockchain and the potential for soft-forks,
+in day to day running we see these tip-reorgs happening semi regularly and removing 1 or at most 2
+blocks of confirmation. In the event that a tip-reorg happens and that decrements the required number
+of confirmations or even eliminates your payment, it is highly likely that the transaction will
+be included in a new block shortly. GigaWallet will then re-issue and re-set the appropriate events / flags
+on the new tip.</p>
+<p>It is possible that the payer has intentionally issued a double-spend transaction hoping
+to fake payment, we recommend that you set a <code>required_confirmations</code> value commensurate with
+the amount of Dogecoin in your invoice and the appropriate level of risk. If you are selling
+someone a Coffee for 30 Dogecoin perhaps a 1 block confirmation is fine, if you are selling
+a million dollar house, there is no reason not to wait for 20-30 confirmations, the ink will
+still be wet on the page anyway.</p>
+</blockquote>
+<h3 id="estimate_seconds_to_confirm"><a class="header" href="#estimate_seconds_to_confirm">estimate_seconds_to_confirm</a></h3>
+<p>Once an intial payment has been seen, this value will be an estimate of the remaining seconds
+before confirmation based on the <code>required_confirmations</code> set for this Invoice. This is useful
+for anyone using a poll-method to query payment as you can roughly predict the wait-time. If
+no payment has been seen or the invoice is already paid this value will be 0.</p>
+<h2 id="admin-api"><a class="header" href="#admin-api">Admin API</a></h2>
+<h3 id="post-accountforeignidinvoice"><a class="header" href="#post-accountforeignidinvoice">POST /account/:foreignID/invoice</a></h3>
+<p>_Create an Invoice</p>
+<p><code>:foreignID</code> is the unique identifier from your system which you used to create an <code>account</code>.</p>
+<p><em><strong>REQUEST BODY:</strong></em></p>
+<p>Expected POST Body:</p>
+<pre><code class="language-json">{
+  "items": [
+    {
+      "name": "Dogecoin Sticker",
+      "value": "100.00",
+      "quantity": 1,
+      "type": "item"
+    }
+  ],
+  "required_confirmations": 3
+}
+</code></pre>
+<p><em><strong>RESPONSE BODY:</strong></em></p>
+<pre><code class="language-json">{
+  "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "items": [
+    {
+      "type": "item",
+      "name": "Dogecoin Sticker",
+      "sku": "",
+      "description": "",
+      "value": "100",
+      "quantity": 1,
+      "image_link": ""
+    }
+  ],
+  "created": "2023-08-30T16:49:51.705419+10:00",
+  "total": "100",
+  "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "part_payment_detected": false,
+  "total_payment_detected": false,
+  "total_payment_confirmed": false,
+  "payment_unconfirmed": false,
+  "estimate_seconds_to_confirm": 0
+}
+</code></pre>
+<h3 id="get-accountforeignidinvoiceinvoiceid"><a class="header" href="#get-accountforeignidinvoiceinvoiceid">GET /account/:foreignID/invoice/:invoiceID</a></h3>
+<p><em>Get an Invoice for a specific account</em></p>
+<p><code>:foreignID</code> is the unique identifier from your system which you used to create an <code>account</code>.
+<code>:invoiceID</code> is the unique identifier for an invoice, ie: <code>DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH</code>.</p>
+<p><em><strong>RESPONSE BODY:</strong></em></p>
+<pre><code class="language-json">{
+  "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "items": [
+    {
+      "type": "item",
+      "name": "Dogecoin Sticker",
+      "sku": "",
+      "description": "",
+      "value": "100",
+      "quantity": 1,
+      "image_link": ""
+    }
+  ],
+  "created": "2023-08-30T16:49:51.705419+10:00",
+  "total": "100",
+  "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "part_payment_detected": false,
+  "total_payment_detected": false,
+  "total_payment_confirmed": false,
+  "payment_unconfirmed": false,
+  "estimate_seconds_to_confirm": 0
+}
+</code></pre>
+<h3 id="get-accountforeignidinvoiceslimit100cursor0"><a class="header" href="#get-accountforeignidinvoiceslimit100cursor0">GET /account/:foreignID/invoices?limit=100&amp;cursor=0</a></h3>
+<p><em>Enumerate an Invoice for a specific account.</em></p>
+<p><code>:foreignID</code> is the unique identifier from your system which you used to create an <code>account</code>.
+<code>limit</code> is the maximum number of records to return.
+<code>cursor</code> starts at 0, and should be set to the <code>cursor</code> value returned by a previous call.</p>
+<p>Those familiar with popular cursor-based APIs such as AWS etc should understand this
+pattern, it allows for machine-to-machine fetching of all invoices and should not be
+confused with an offset/limit style API.</p>
+<p>The response contains two elements, <code>items</code> which is an array of invoices, and <code>cursor</code>
+which should be passed to the next invocation. A cursor of <code>0</code> indicates there are
+no further records.</p>
+<p><em><strong>RESPONSE BODY:</strong></em></p>
+<pre><code class="language-json">{
+"items": [
+      {
+        "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+        "items": [
+          {
+            "type": "item",
+            "name": "Dogecoin Sticker",
+            "sku": "",
+            "description": "",
+            "value": "100",
+            "quantity": 1,
+            "image_link": ""
+          }
+        ],
+        "created": "2023-08-30T16:49:51.705419+10:00",
+        "total": "100",
+        "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+        "part_payment_detected": false,
+        "total_payment_detected": false,
+        "total_payment_confirmed": false,
+        "payment_unconfirmed": false,
+        "estimate_seconds_to_confirm": 0
+      }
+  ],
+  "cursor": 0
+}
+</code></pre>
+<h2 id="public-api"><a class="header" href="#public-api">Public API</a></h2>
+<p>The public invoice APIs are available on a different port which is designed to be exposed to the internet via your
+proxy or as part of your own API gateway. These APIs can be called by web or mobile clients, with the aim of providing
+payment info to the payer. We imagine you will use these apis to show the payer a list of items they are purchasing, and
+to provide details / address / QRcodes etc to facilitate payment.</p>
+<h3 id="get-invoiceinvoiceid"><a class="header" href="#get-invoiceinvoiceid">GET /invoice/:invoiceID</a></h3>
+<p><em>Get an Invoice</em></p>
+<p><code>:invoiceID</code> is the unique identifier for an invoice, ie: <code>DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH</code>.</p>
+<p><em><strong>RESPONSE BODY:</strong></em></p>
+<pre><code class="language-json">{
+  "id": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "items": [
+    {
+      "type": "item",
+      "name": "Dogecoin Sticker",
+      "sku": "",
+      "description": "",
+      "value": "100",
+      "quantity": 1,
+      "image_link": ""
+    }
+  ],
+  "created": "2023-08-30T16:49:51.705419+10:00",
+  "total": "100",
+  "pay_to_address": "DMcUQWwMdpdXqiYNiYgCzrM5Wn85dYerQH",
+  "part_payment_detected": false,
+  "total_payment_detected": false,
+  "total_payment_confirmed": false,
+  "payment_unconfirmed": false,
+  "estimate_seconds_to_confirm": 0
+}
+</code></pre>
+<h3 id="get-invoiceinvoiceidqrpng"><a class="header" href="#get-invoiceinvoiceidqrpng">GET /invoice/:invoiceID/qr.png</a></h3>
+<p>This endpoint does not return JSON, it returns a PNG image of a QR code containing a dogecoin
+address in the format:</p>
+<p><code>dogecoin:&lt;address&gt;?amount=&lt;amount&gt;&amp;ctx=&lt;dogeconnect url&gt;</code></p>
+<p>The <code>address</code> is the <code>pay_to_address</code> in the invoice.
+The <code>amount</code> is the <code>total</code> dogecoin in the invoice.
+The <code>ctx</code> is a URL that points to a <code>dogecoin connect</code> payload.</p>
+<p><img src="images/qr.png" alt="qr code" width="40%" style="margin-left: 30%;"/></p>
+<p>This can be directly placed on your payment page and if scanned will load the user's
+Dogecoin wallet to make a payment for the full amount of the invoice. This could be
+used in a web interface, or even emailed or mailed with an invoice allowing immediate
+payment by the recipient.</p>
+<h3 id="get-invoiceinvoiceidconnect"><a class="header" href="#get-invoiceinvoiceidconnect">GET /invoice/:invoiceID/connect</a></h3>
+<p>This endpoint returns a <code>dogecoin connect</code> payload which is defined as a new protocol
+to facilitate payment from a self-custodial wallet without needing access to a relay.</p>
+<p>The concept is that a Dogecoin wallet which understands the <code>dogecoin connect</code> protocol
+can present in it's own UI, an invoice complete with items being purchased and have
+the user generate a <code>transaction</code> which can be issued back to GigaWallet directly where
+it will be validated and sent to the mempool.</p>
+<p>This will allow GigaWallet to support <code>zero-confirmation</code> payments, aka <code>instant payments</code>
+which are required for fast-turn-around services such as vending machines, coffee shops,
+etc.</p>
+<pre><code class="language-json">{
+  "version": "0.1",
+  "service_name": "Example Dogecoin Store",
+  "service_icon_url": "https://example.com/icon.png",
+  "service_domain": "example.com",
+  "service_key_hash": "...",
+  "payload": "eyJ0eXBlIjoiaW52b2ljZSIsInJlcXVlc3...",
+  "hash": "..."
+}
+</code></pre>
+<p>The JSON body contains a <code>payload</code> which is signed by the issuing store key which
+can be stored on the client once recognised for the first time. This protocol is
+still under development and support is incomplete, watch this space!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="accounts.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="connect.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="accounts.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="connect.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+        <script>
+            window.playground_line_numbers = true;
+        </script>
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
