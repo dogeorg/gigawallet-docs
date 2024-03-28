@@ -36,9 +36,9 @@ methods.
 
 Install some dependencies required to build Gigawallet:
 
-* **GCC** compiler toolchain (for [cgo](https://go.dev/blog/cgo) i.e. Go-to-C linking; only GCC is supported!)
-* [zeroMQ](http://wiki.zeromq.org/intro:get-the-software) version 4 – [docs](https://zeromq.org/download/)
-* [SQLite 3](https://www.sqlite.org/download.html)
+* GCC compiler toolchain (for [cgo](https://go.dev/blog/cgo) i.e. Go-to-C linking; only GCC is supported!)
+* zeroMQ version 4 – [docs](https://zeromq.org/download/) [wiki](http://wiki.zeromq.org/intro:get-the-software)
+* SQLite 3 – [docs](https://www.sqlite.org/download.html)
 
 ```shell
 sudo apt-get update
