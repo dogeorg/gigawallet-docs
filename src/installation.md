@@ -45,7 +45,7 @@ sudo apt-get update
 sudo apt-get install libzmq3-dev sqlite3 libsqlite3-dev build-essential pkg-config
 ```
 
-**On Windows**: you can use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) to install these tools, and build Gigawallet from inside the WSL environment (you can access windows drives via `/mnt/c` etc.) Alternatively there is [tdm-gcc](https://jmeubank.github.io/tdm-gcc/), and you can download the other libraries.
+**On Windows**: you can use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) to install these tools, and build Gigawallet from inside the WSL environment (you can access windows drives via `/mnt/c` etc.) Alternatively there is [MSYS2](https://www.msys2.org/) which provides a GCC build environment without using WSL.
 
 **On Mac**: you can use [Homebrew](https://brew.sh/): `brew install zmq pkg-config` – note that `sqlite3` is pre-installed on modern macs. You can brew install `git` if necessary.
 
