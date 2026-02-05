@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-
-const SIDEBAR_TRIGGER_SLOT_ID = 'sidebar-trigger-slot';
+import Image from 'next/image';
+import { SIDEBAR_TRIGGER_SLOT_ID } from './SidebarTriggerPortal';
 
 export function TopNav() {
   return (
@@ -11,7 +11,20 @@ export function TopNav() {
         <div id={SIDEBAR_TRIGGER_SLOT_ID} className="gigawallet-top-nav-menu-slot" />
         <div className="gigawallet-top-nav-logo">
           <Link href="/" className="gigawallet-top-nav-logo-link">
-            <span className="gigawallet-logo-text">GigaWallet</span>
+            <Image
+              src="/images/gigawallet-icon.png"
+              alt=""
+              width={40}
+              height={40}
+              className="gigawallet-logo-icon"
+            />
+            <Image
+              src="/images/gigawallet-logo.png"
+              alt="GigaWallet"
+              width={140}
+              height={32}
+              className="gigawallet-logo-img"
+            />
           </Link>
         </div>
         <div className="gigawallet-top-nav-actions">
@@ -23,7 +36,7 @@ export function TopNav() {
             title="View source code"
             aria-label="View source on GitHub"
           >
-            GitHub
+            <span className="material-icons" aria-hidden>code</span>
           </a>
           <a
             href="https://github.com/dogeorg/gigawallet-docs"
@@ -33,7 +46,7 @@ export function TopNav() {
             title="Edit this site"
             aria-label="Edit documentation"
           >
-            Edit docs
+            <span className="material-icons" aria-hidden>edit</span>
           </a>
         </div>
       </div>

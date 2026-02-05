@@ -7,7 +7,11 @@ export function SidebarFoundationLogo() {
       className="gigawallet-sidebar-foundation-link"
       aria-label="Dogecoin Foundation - dogecoin.org"
     >
-      Dogecoin Foundation
+      <img
+        src="/images/dogecoin-foundation.svg"
+        alt="Dogecoin Foundation"
+        className="gigawallet-sidebar-foundation-logo"
+      />
     </a>
   );
 }
