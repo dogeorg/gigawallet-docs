@@ -1,0 +1,21 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "---What is GigaWallet?---",
+    "index",
+    "concepts",
+    "---Getting Started---",
+    "installation",
+    "---Integration---",
+    "accounts",
+    "invoices",
+    "connect",
+    "payout",
+    "webhooks",
+    "mqtt",
+    "---Contributing---",
+    "extending",
+    "[GitHub Repository](https://github.com/dogecoinfoundation/gigawallet)",
+    "[Edit Documentation](https://github.com/dogeorg/gigawallet-docs)"
+  ]
+}
