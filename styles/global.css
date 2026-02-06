@@ -1,0 +1,226 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* Material Icons in sidebar: match Fumadocs icon size (1rem) */
+#nd-sidebar .material-icons,
+[data-sidebar-placeholder] .material-icons {
+  font-size: 1rem !important;
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fd-muted-foreground, #9a9a9a);
+  margin: 1.5rem 0 0.375rem 0;
+  padding: 0 0.5rem;
+  line-height: 1.4;
+  pointer-events: none;
+  user-select: none;
+}
+.sidebar-section-title:first-child {
+  margin-top: 0;
+}
+#nd-sidebar .sidebar-section-title,
+[data-sidebar-placeholder] .sidebar-section-title {
+  display: block;
+}
+
+/* Section titles with icon: flex so icon and text align */
+.sidebar-section-title-with-icon {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sidebar-section-title-with-icon .material-icons {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.gigawallet-top-nav {
+  background-color: var(--fd-background-secondary, #252525);
+  border-bottom: 1px solid var(--fd-border, #333);
+  padding: 0.75rem 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1100;
+}
+body:has(.gigawallet-top-nav) {
+  padding-top: 3.5rem;
+  --fd-banner-height: 3.5rem;
+}
+#nd-sidebar-mobile {
+  top: 60px !important;
+  height: calc(100vh - 60px) !important;
+  max-height: calc(100dvh - 60px);
+}
+.gigawallet-top-nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  gap: 1rem;
+}
+.gigawallet-top-nav-menu-slot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 2.5rem;
+}
+.gigawallet-top-nav-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 5rem;
+  justify-content: flex-end;
+}
+@media (max-width: 767px) {
+  #sidebar-trigger-slot,
+  .gigawallet-top-nav-menu-slot {
+    display: none !important;
+  }
+}
+.gigawallet-top-nav-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: var(--fd-foreground-secondary, #e5e5e5);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+.gigawallet-top-nav-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+.gigawallet-top-nav-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gigawallet-logo-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.gigawallet-logo-img {
+  height: 32px;
+  width: auto;
+  max-height: 36px;
+  object-fit: contain;
+}
+.gigawallet-top-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fd-foreground-secondary, #e5e5e5);
+  padding: 0.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.gigawallet-top-nav-link .material-icons {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.gigawallet-top-nav-link:hover {
+  color: var(--fd-foreground, #fff);
+  background-color: var(--fd-background-tertiary, #2f2f2f);
+}
+
+#nd-sidebar {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+#nd-sidebar > div:last-of-type[class*="border-t"] {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+/* Sidebar footer row: Dogecoin Foundation logo on the left of theme toggle (like radiodoge) */
+#nd-sidebar > div[class*="border-t"] {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#nd-sidebar > div[class*="border-t"] > div.flex.items-center:first-child {
+  order: 2;
+  flex: 1;
+  min-width: 0;
+}
+
+#nd-sidebar > div[class*="border-t"] > a.gigawallet-sidebar-foundation-link {
+  order: 1;
+  flex-shrink: 0;
+}
+
+.gigawallet-sidebar-foundation-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.gigawallet-sidebar-foundation-link:hover {
+  opacity: 0.85;
+}
+
+.gigawallet-sidebar-foundation-logo {
+  width: 5rem;
+  height: auto;
+  max-height: 2.5rem;
+  object-fit: contain;
+  display: block;
+}
+
+.dark .gigawallet-sidebar-foundation-logo {
+  filter: brightness(0) invert(1);
+}
+
+/* Sidebar placeholder: when expanded use 268px; when collapsed it shrinks so main content (and hero) expands */
+@media (min-width: 768px) {
+  [data-sidebar-placeholder] {
+    min-width: var(--fd-sidebar-width);
+    --fd-sidebar-width: 268px;
+  }
+  #nd-docs-layout {
+    --fd-sidebar-col: var(--fd-sidebar-width);
+  }
+}
+
+/* Hero fills main content area so when sidebar is collapsed it expands (same as radiodoge) */
+#nd-docs-layout main .gigawallet-hero,
+[data-slot="docs-layout"] main .gigawallet-hero {
+  width: 100%;
+  box-sizing: border-box;
+}
