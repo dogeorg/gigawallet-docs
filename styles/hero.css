@@ -433,15 +433,37 @@
   50% { transform: translateY(-10px); }
 }
 
+/* Mobile: same pattern as libdogecoin-docs (hero full width, content centered) */
 @media (max-width: 768px) {
+  .gigawallet-hero {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3rem 1.5rem 0;
+  }
+  .gigawallet-hero-content {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gigawallet-hero-text {
+    max-width: 100%;
+    text-align: center;
+  }
   .gigawallet-hero-title {
     font-size: 2.25rem;
   }
   .gigawallet-hero-subtitle {
     font-size: 1.1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .gigawallet-hero-buttons {
+    justify-content: center;
   }
   .gigawallet-hero-gif {
     width: 220px;
+    max-width: 100%;
   }
   .gigawallet-hero-game {
     height: 60px;
@@ -453,7 +475,7 @@
   }
 }
 
-/* Get Started section below hero */
+/* Get Started section below hero (same as radiodoge-docs) */
 .gigawallet-get-started-section {
   padding: 3rem 1.5rem;
   max-width: 800px;

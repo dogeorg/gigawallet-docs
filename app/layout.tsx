@@ -40,9 +40,9 @@ export const metadata = {
     url: baseUrl,
     images: [
       {
-        url: '/images/gigawallet-icon.png',
-        width: 512,
-        height: 512,
+        url: '/images/social-card.png',
+        width: 1200,
+        height: 630,
         alt: ogTitle,
       },
     ],
@@ -54,7 +54,7 @@ export const metadata = {
     creator: '@dogecoin',
     title: ogTitle,
     description: ogDescription,
-    images: ['/images/gigawallet-icon.png'],
+    images: ['/images/social-card.png'],
     imagesAlt: ogTitle,
   },
   icons: {
